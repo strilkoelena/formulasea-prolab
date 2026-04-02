@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Formula ProLab — Калькулятор прибутку</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pistachio: #b5c9a1;
+  --pistachio-deep: #8aaa72;
+  --pistachio-dark: #5a7a48;
+  --pistachio-bg: #e8f0e0;
+  --pistachio-light: #f2f7ec;
+  --cream: #faf8f3;
+  --warm-white: #f7f4ee;
+  --gold: #c8a96e;
+  --gold-light: #e8d5a8;
+  --charcoal: #2a2a2a;
+  --text: #383838;
+  --muted: #7a7a7a;
+  --red-soft: #d4756a;
+  --green-gain: #4a8c5c;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  height: 100%;
+  font-family: 'Montserrat', sans-serif;
+  background: var(--pistachio-bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* ── APP SHELL ── */
+.app {
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 0 60px rgba(0,0,0,0.15);
+}
+
+/* ── SCREENS ── */
+.screen {
+  display: none;
+  flex-direction: column;
+  min-height: 100vh;
+  animation: appear .3s ease;
+}
+.screen.active { display: flex; }
+
+@keyframes appear {
+  from { opacity:0; transform: translateY(12px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════
+   COVER SCREEN
+══════════════════════════════ */
+#s-cover {
+  background: linear-gradient(160deg, #c8d9b8 0%, #a8bf92 40%, #8aaa72 100%);
+  position: relative;
+  overflow: hidden;
+  justify-content: space-between;
+}
+
+.cover-deco {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.18);
+  pointer-events: none;
+}
+.deco-1 { width:320px; height:320px; top:-100px; right:-100px; }
+.deco-2 { width:200px; height:200px; top:-30px; right:-30px; border-color: rgba(255,255,255,0.1); }
+.deco-3 { width:260px; height:260px; bottom:-80px; left:-80px; border-color: rgba(255,255,255,0.1); }
+.deco-4 { width:160px; height:160px; bottom:-20px; left:-20px; }
+
+.cover-top {
+  padding: 52px 32px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.cover-leaf { font-size: 22px; }
+.cover-brand {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+
+.cover-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 36px;
+}
+
+.cover-hero {
+  position: relative;
+  z-index: 2;
+  padding: 0 32px;
+}
+
+.cover-icon-big {
+  font-size: 64px;
+  margin-bottom: 20px;
+  display: block;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
+}
+
+.cover-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 14px;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.12);
+}
+.cover-title em {
+  font-style: italic;
+  color: rgba(255,255,255,0.85);
+}
+
+.cover-subtitle {
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.65;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.cover-stats {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+}
+.cstat {
+  flex: 1;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 14px;
+  padding: 12px 10px;
+  text-align: center;
+}
+.cstat-val { font-size: 18px; font-weight: 800; color: #fff; }
+.cstat-lab { font-size: 9px; color: rgba(255,255,255,0.7); margin-top: 3px; letter-spacing: .5px; }
+
+.cover-bottom {
+  padding: 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.btn-start {
+  width: 100%;
+  padding: 18px;
+  background: #fff;
+  color: var(--pistachio-dark);
+  border: none;
+  border-radius: 18px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+  transition: transform .2s, box-shadow .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.btn-start:active { transform: scale(.98); }
+
+.cover-note {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: .5px;
+}
+
+/* ══════════════════════════════
+   QUIZ SCREENS
+══════════════════════════════ */
+.quiz-header {
+  background: linear-gradient(135deg, var(--pistachio-deep), var(--pistachio-dark));
+  padding: 48px 28px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.quiz-header::after {
+  content:'';
+  position: absolute;
+  bottom: -30px; right: -30px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+
+.qh-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.qh-brand { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.55); font-weight: 600; }
+.qh-step { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.8); }
+
+.progress-track {
+  display: flex; gap: 4px;
+  margin-bottom: 18px;
+}
+.prog-seg {
+  height: 3px; flex: 1; border-radius: 2px;
+  background: rgba(255,255,255,0.22);
+  transition: background .4s;
+}
+.prog-seg.done { background: rgba(255,255,255,0.9); }
+
+.qh-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+.qh-question {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.25;
+}
+
+/* QUIZ BODY */
+.quiz-body {
+  flex: 1;
+  padding: 24px 24px 32px;
+  overflow-y: auto;
+  background: var(--cream);
+}
+
+.opt-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 18px;
+  background: var(--warm-white);
+  border: 1.5px solid #e4ddd2;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  transition: all .2s;
+  text-align: left;
+}
+.opt-btn:hover, .opt-btn:active {
+  border-color: var(--pistachio-deep);
+  background: var(--pistachio-light);
+  transform: translateX(3px);
+}
+.opt-btn.selected {
+  border-color: var(--pistachio-dark);
+  background: #edf5e5;
+  color: var(--pistachio-dark);
+  font-weight: 600;
+}
+.opt-ic { font-size: 22px; flex-shrink:0; }
+.opt-check {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid #d0c8be;
+  margin-left: auto;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  color: transparent;
+  transition: all .2s;
+}
+.opt-btn.selected .opt-check {
+  background: var(--pistachio-dark);
+  border-color: var(--pistachio-dark);
+  color: #fff;
+}
+
+.custom-row {
+  display: flex; gap: 8px; margin-top: 4px;
+}
+.custom-inp {
+  flex:1;
+  padding: 14px 16px;
+  background: var(--warm-white);
+  border: 1.5px solid #e4ddd2;
+  border-radius: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color .2s;
+}
+.custom-inp:focus { border-color: var(--pistachio-deep); }
+.custom-inp::placeholder { color: #bbb; }
+
+.btn-ok {
+  padding: 14px 20px;
+  background: var(--pistachio-dark);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ══════════════════════════════
+   LOADING
+══════════════════════════════ */
+#s-loading {
+  background: var(--cream);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+}
+.loader-wrap { margin-bottom: 28px; position: relative; }
+.loader-ring {
+  width: 72px; height: 72px;
+  border: 4px solid var(--pistachio-bg);
+  border-top-color: var(--pistachio-deep);
+  border-radius: 50%;
+  animation: spin .9s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loader-icon {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 24px;
+}
+.loading-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: 10px;
+}
+.loading-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ══════════════════════════════
+   RESULT SCREEN
+══════════════════════════════ */
+#s-result { background: var(--cream); }
+
+.result-hero {
+  background: linear-gradient(160deg, #c8d9b8 0%, #8aaa72 100%);
+  padding: 52px 28px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.result-hero::before {
+  content:'';
+  position:absolute; top:-60px; right:-60px;
+  width:200px; height:200px;
+  border-radius:50%;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.result-emoji { font-size: 48px; margin-bottom:12px; display:block; }
+.result-eyebrow { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.65); margin-bottom:8px; }
+.result-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+}
+
+.result-body { padding: 24px 24px 100px; }
+
+/* Cards */
+.rcard {
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 14px;
+}
+.rcard-loss {
+  background: #fff5f4;
+  border: 1.5px solid #f0c8c4;
+}
+.rcard-gain {
+  background: #f0faf3;
+  border: 1.5px solid #b8dfc4;
+}
+.rcard-neutral {
+  background: var(--warm-white);
+  border: 1.5px solid #e4ddd2;
+}
+
+.rc-label { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:5px; }
+.rcard-loss .rc-label { color: var(--red-soft); }
+.rcard-gain .rc-label { color: var(--green-gain); }
+.rcard-neutral .rc-label { color: var(--muted); }
+
+.rc-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.rcard-loss .rc-amount { color: var(--red-soft); }
+.rcard-gain .rc-amount { color: var(--green-gain); }
+.rcard-neutral .rc-amount { color: var(--charcoal); }
+
+.rc-period { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+.rc-year {
+  font-size: 13px;
+  font-weight: 600;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0,0,0,0.08);
+}
+.rcard-loss .rc-year { color: var(--red-soft); }
+.rcard-gain .rc-year { color: var(--green-gain); }
+
+.compare-2col { display:flex; gap:10px; margin-bottom:14px; }
+.c2 {
+  flex:1;
+  border-radius: 16px;
+  padding: 14px 12px;
+  text-align: center;
+}
+.c2.now { background: var(--warm-white); border: 1.5px solid #e4ddd2; }
+.c2.future { background: #f0faf3; border: 1.5px solid #b8dfc4; }
+.c2-lab { font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:5px; }
+.c2-val { font-size:22px; font-weight:800; }
+.c2.now .c2-val { color: var(--charcoal); }
+.c2.future .c2-val { color: var(--green-gain); }
+.c2-sub { font-size:10px; color:var(--muted); margin-top:2px; }
+
+.insight {
+  background: var(--pistachio-light);
+  border-left: 3px solid var(--pistachio-deep);
+  border-radius: 0 14px 14px 0;
+  padding: 13px 16px;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.insight strong { color: var(--pistachio-dark); }
+
+/* Sticky CTA bar */
+.sticky-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 430px;
+  padding: 14px 24px 22px;
+  background: linear-gradient(to top, var(--cream) 80%, transparent);
+  z-index: 100;
+}
+.btn-main {
+  width: 100%;
+  padding: 17px;
+  background: linear-gradient(135deg, var(--pistachio-dark), var(--pistachio-deep));
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(90,122,72,0.35);
+  transition: transform .2s, box-shadow .2s;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.btn-main:active { transform: scale(.98); box-shadow: 0 4px 12px rgba(90,122,72,0.3); }
+.btn-ghost {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  background: transparent;
+  color: var(--pistachio-dark);
+  border: 1.5px solid var(--pistachio);
+  border-radius: 18px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ══════════════════════════════
+   OFFER SCREEN
+══════════════════════════════ */
+#s-offer { background: var(--cream); }
+
+.offer-header {
+  background: linear-gradient(160deg, #c8d9b8 0%, #8aaa72 100%);
+  padding: 52px 28px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.offer-header::after {
+  content:'';
+  position:absolute; bottom:-50px; right:-50px;
+  width:180px; height:180px;
+  border-radius:50%;
+  background: rgba(255,255,255,0.07);
+}
+.oh-badge {
+  display:inline-block;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.35);
+  color:#fff;
+  font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  padding:5px 14px; border-radius:20px; margin-bottom:14px;
+}
+.oh-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px; font-weight:700; color:#fff; line-height:1.15;
+  margin-bottom: 8px;
+}
+.oh-sub { font-size:12px; color:rgba(255,255,255,0.75); line-height:1.6; }
+
+.offer-body { padding: 24px 24px 120px; }
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--pistachio-dark);
+  margin-bottom: 14px;
+  margin-top: 24px;
+}
+.section-title:first-child { margin-top: 0; }
+
+/* What's included */
+.include-card {
+  background: var(--warm-white);
+  border: 1.5px solid #e4ddd2;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.ic-header {
+  background: linear-gradient(135deg, var(--pistachio-dark), var(--pistachio-deep));
+  padding: 16px 20px;
+  display:flex; align-items:center; gap:12px;
+}
+.ic-header-icon { font-size:22px; }
+.ic-header-title { font-size:14px; font-weight:700; color:#fff; }
+.ic-header-sub { font-size:10px; color:rgba(255,255,255,0.7); margin-top:1px; }
+
+.ic-items { padding: 14px 20px; }
+.ic-item {
+  display:flex; align-items:flex-start; gap:10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0ece6;
+  font-size:13px; color:var(--text); line-height:1.4;
+}
+.ic-item:last-child { border-bottom: none; }
+.ic-dot { width:6px; height:6px; border-radius:50%; background:var(--pistachio-deep); margin-top:6px; flex-shrink:0; }
+
+/* Margin highlight */
+.margin-pill {
+  background: linear-gradient(135deg, #edf5e5, #dff0d5);
+  border: 1.5px solid var(--pistachio);
+  border-radius: 18px;
+  padding: 18px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom: 14px;
+}
+.mp-left { }
+.mp-label { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }
+.mp-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size:36px; font-weight:700; color:var(--pistachio-dark);
+}
+.mp-right { text-align:right; font-size:12px; color:var(--muted); line-height:1.5; }
+
+/* Price block */
+.price-block {
+  background: var(--charcoal);
+  border-radius: 20px;
+  padding: 22px 20px;
+  margin-bottom: 14px;
+  position:relative; overflow:hidden;
+}
+.price-block::before {
+  content:'';
+  position:absolute; top:-40px; right:-40px;
+  width:140px; height:140px;
+  border-radius:50%;
+  background: rgba(181,201,161,0.08);
+}
+.pb-label { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:5px; }
+.pb-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size:42px; font-weight:700; color:#fff; margin-bottom:3px;
+}
+.pb-sub { font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:16px; }
+.pb-row { display:flex; gap:10px; }
+.pb-stat {
+  flex:1;
+  background: rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 10px 12px;
+  text-align:center;
+}
+.pb-stat-val { font-size:16px; font-weight:800; color:var(--pistachio-light); }
+.pb-stat-lab { font-size:9px; color:rgba(255,255,255,0.4); margin-top:2px; }
+
+/* FAQ */
+.faq-item {
+  border: 1.5px solid #e4ddd2;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  background: var(--warm-white);
+}
+.faq-q { font-size:13px; font-weight:600; color:var(--charcoal); margin-bottom:5px; }
+.faq-a { font-size:12px; color:var(--muted); line-height:1.55; }
+
+/* ══════════════════════════════
+   CONTACTS SCREEN
+══════════════════════════════ */
+#s-contacts { background: var(--cream); }
+
+.contacts-hero {
+  background: linear-gradient(160deg, #c8d9b8 0%, #8aaa72 100%);
+  padding: 60px 28px 36px;
+  text-align:center;
+  position:relative; overflow:hidden;
+}
+.contacts-hero::before {
+  content:'';
+  position:absolute; top:-50px; right:-50px;
+  width:180px; height:180px;
+  border-radius:50%;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.ch-emoji { font-size:52px; margin-bottom:14px; display:block; }
+.ch-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size:32px; font-weight:700; color:#fff; line-height:1.2;
+  margin-bottom:8px;
+}
+.ch-sub { font-size:12px; color:rgba(255,255,255,0.75); line-height:1.6; }
+
+.contacts-body { padding: 28px 24px 40px; }
+
+.contact-card {
+  display:flex; align-items:center; gap:16px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  margin-bottom: 12px;
+  text-decoration:none;
+  transition: transform .2s, box-shadow .2s;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  font-family: 'Montserrat', sans-serif;
+  text-align: left;
+}
+.contact-card:active { transform: scale(.98); }
+
+.cc-ig {
+  background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  box-shadow: 0 8px 24px rgba(220,39,67,0.3);
+}
+.cc-tg {
+  background: #229ED9;
+  box-shadow: 0 8px 24px rgba(34,158,217,0.3);
+}
+.cc-icon { font-size:26px; flex-shrink:0; }
+.cc-title { font-size:14px; font-weight:700; color:#fff; }
+.cc-handle { font-size:11px; color:rgba(255,255,255,0.75); margin-top:2px; }
+.cc-arrow { margin-left:auto; font-size:18px; color:rgba(255,255,255,0.6); }
+
+.contacts-divider {
+  text-align:center;
+  margin: 20px 0;
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  position:relative;
+}
+.contacts-divider::before, .contacts-divider::after {
+  content:'';
+  position:absolute;
+  top:50%; width:38%;
+  height:1px;
+  background: #e4ddd2;
+}
+.contacts-divider::before { left:0; }
+.contacts-divider::after { right:0; }
+
+.keyword-box {
+  background: var(--pistachio-light);
+  border: 1.5px dashed var(--pistachio);
+  border-radius: 16px;
+  padding: 16px 20px;
+  text-align:center;
+  font-size:13px;
+  color:var(--text);
+  line-height:1.6;
+}
+.keyword-box strong {
+  display:block;
+  font-size:15px;
+  color:var(--pistachio-dark);
+  font-weight:700;
+  margin-top:4px;
+}
+
+.signature-block {
+  margin-top: 28px;
+  text-align:center;
+  padding-top: 20px;
+  border-top: 1px solid #e4ddd2;
+}
+.sig-name { font-size:14px; font-weight:700; color:var(--pistachio-dark); }
+.sig-role { font-size:11px; color:var(--muted); margin-top:3px; }
+.sig-brand { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--pistachio); margin-top:6px; }
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- ══════ COVER ══════ -->
+<div class="screen active" id="s-cover">
+  <div class="cover-deco deco-1"></div>
+  <div class="cover-deco deco-2"></div>
+  <div class="cover-deco deco-3"></div>
+  <div class="cover-deco deco-4"></div>
+
+  <div class="cover-top">
+    <div class="cover-logo-row">
+      <span class="cover-leaf">🌿</span>
+      <span class="cover-brand">formula_sea.prolab</span>
+    </div>
+    <div class="cover-badge">Для beauty-майстрів</div>
+  </div>
+
+  <div class="cover-hero">
+    <span class="cover-icon-big">💸</span>
+    <div class="cover-title">Скільки ви<br>залишаєте<br><em>«на столі»?</em></div>
+    <div class="cover-subtitle">
+      Дізнайтесь точну цифру за 5 питань — і отримайте персональний план збільшення доходу
+    </div>
+    <div class="cover-stats">
+      <div class="cstat">
+        <div class="cstat-val">+40%</div>
+        <div class="cstat-lab">до чека</div>
+      </div>
+      <div class="cstat">
+        <div class="cstat-val">5–7</div>
+        <div class="cstat-lab">днів окупність</div>
+      </div>
+      <div class="cstat">
+        <div class="cstat-val">100–150</div>
+        <div class="cstat-lab">грн маржа/шт</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <button class="btn-start" onclick="startQuiz()">
+      <span>🔥</span> Розрахувати мій прибуток
+    </button>
+    <div class="cover-note">2 хвилини · Безкоштовно · Без обʼязань</div>
+  </div>
+</div>
+
+<!-- ══════ Q1: ТИП МАЙСТРА ══════ -->
+<div class="screen" id="s-q1">
+  <div class="quiz-header">
+    <div class="qh-top">
+      <span class="qh-brand">Formula ProLab</span>
+      <span class="qh-step">1 / 5</span>
+    </div>
+    <div class="progress-track">
+      <div class="prog-seg done"></div>
+      <div class="prog-seg"></div>
+      <div class="prog-seg"></div>
+      <div class="prog-seg"></div>
+      <div class="prog-seg"></div>
+    </div>
+    <div class="qh-label">Про вас</div>
+    <div class="qh-question">Ваша<br>спеціалізація?</div>
+  </div>
+  <div class="quiz-body">
+    <button class="opt-btn" onclick="pick('master','nail',this)">
+      <span class="opt-ic">💅</span> Манікюр / педикюр
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('master','cosm',this)">
+      <span class="opt-ic">💆‍♀️</span> Косметолог
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('master','hair',this)">
+      <span class="opt-ic">💇‍♀️</span> Перукар / барбер
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('master','brow',this)">
+      <span class="opt-ic">👁</span> Майстер брів / вій
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('master','other',this)">
+      <span class="opt-ic">🧴</span> Інше
+      <span class="opt-check">✓</span>
+    </button>
+  </div>
+</div>
+
+<!-- ══════ Q2: КЛІЄНТИ ══════ -->
+<div class="screen" id="s-q2">
+  <div class="quiz-header">
+    <div class="qh-top">
+      <span class="qh-brand">Formula ProLab</span>
+      <span class="qh-step">2 / 5</span>
+    </div>
+    <div class="progress-track">
+      <div class="prog-seg done"></div>
+      <div class="prog-seg done"></div>
+      <div class="prog-seg"></div>
+      <div class="prog-seg"></div>
+      <div class="prog-seg"></div>
+    </div>
+    <div class="qh-label">Ваша база</div>
+    <div class="qh-question">Клієнтів<br>на місяць?</div>
+  </div>
+  <div class="quiz-body">
+    <button class="opt-btn" onclick="pick('clients',30,this)">
+      <span class="opt-ic">🌱</span> 20–40 клієнтів
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('clients',60,this)">
+      <span class="opt-ic">🌿</span> 40–80 клієнтів
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('clients',115,this)">
+      <span class="opt-ic">🌳</span> 80–150 клієнтів
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('clients',180,this)">
+      <span class="opt-ic">🏆</span> 150+ клієнтів
+      <span class="opt-check">✓</span>
+    </button>
+    <div class="custom-row">
+      <input type="number" class="custom-inp" id="inp-clients" placeholder="✍️ Своя цифра" min="1" max="500">
+      <button class="btn-ok" onclick="customPick('clients','inp-clients','s-q3')">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Q3: ЧЕК ══════ -->
+<div class="screen" id="s-q3">
+  <div class="quiz-header">
+    <div class="qh-top">
+      <span class="qh-brand">Formula ProLab</span>
+      <span class="qh-step">3 / 5</span>
+    </div>
+    <div class="progress-track">
+      <div class="prog-seg done"></div>
+      <div class="prog-seg done"></div>
+      <div class="prog-seg done"></div>
+      <div class="prog-seg"></div>
+      <div class="prog-seg"></div>
+    </div>
+    <div class="qh-label">Ваш дохід</div>
+    <div class="qh-question">Середній чек<br>за процедуру?</div>
+  </div>
+  <div class="quiz-body">
+    <button class="opt-btn" onclick="pick('check',150,this)">
+      <span class="opt-ic">💵</span> 100–200 грн
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('check',250,this)">
+      <span class="opt-ic">💴</span> 200–400 грн
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('check',550,this)">
+      <span class="opt-ic">💶</span> 400–700 грн
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('check',900,this)">
+      <span class="opt-ic">💎</span> 700–1000 грн
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('check',1200,this)">
+      <span class="opt-ic">👑</span> 1000+ грн
+      <span class="opt-check">✓</span>
+    </button>
+    <div class="custom-row" style="margin-top:8px;">
+      <input type="number" class="custom-inp" id="inp-check" placeholder="✍️ Точна сума (грн)" min="50">
+      <button class="btn-ok" onclick="customPick('check','inp-check','s-q4')">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Q4: ПРОДАЄТЕ? ══════ -->
+<div class="screen" id="s-q4">
+  <div class="quiz-header">
+    <div class="qh-top">
+      <span class="qh-brand">Formula ProLab</span>
+      <span class="qh-step">4 / 5</span>
+    </div>
+    <div class="progress-track">
+      <div class="prog-seg done"></div>
+      <div class="prog-seg done"></div>
+      <div class="prog-seg done"></div>
+      <div class="prog-seg done"></div>
+      <div class="prog-seg"></div>
+    </div>
+    <div class="qh-label">Чесно</div>
+    <div class="qh-question">Продаєте<br>косметику<br>клієнтам?</div>
+  </div>
+  <div class="quiz-body">
+    <button class="opt-btn" onclick="pick('sells','yes',this)">
+      <span class="opt-ic">✅</span> Так, системно
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('sells','sometimes',this)">
+      <span class="opt-ic">🤔</span> Іноді, несистемно
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('sells','no',this)">
+      <span class="opt-ic">❌</span> Ні, тільки послуги
+      <span class="opt-check">✓</span>
+    </button>
+    <div style="margin-top:16px; padding:13px 16px; background:var(--pistachio-light); border-radius:14px; border-left:3px solid var(--pistachio-deep); font-size:12px; color:#5a7a48; line-height:1.6;">
+      💡 Будь-яка відповідь вірна — ми просто порахуємо вашу особисту цифру
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Q5: ФОРМАТ ══════ -->
+<div class="screen" id="s-q5">
+  <div class="quiz-header">
+    <div class="qh-top">
+      <span class="qh-brand">Formula ProLab</span>
+      <span class="qh-step">5 / 5</span>
+    </div>
+    <div class="progress-track">
+      <div class="prog-seg done"></div>
+      <div class="prog-seg done"></div>
+      <div class="prog-seg done"></div>
+      <div class="prog-seg done"></div>
+      <div class="prog-seg done"></div>
+    </div>
+    <div class="qh-label">Останнє питання!</div>
+    <div class="qh-question">Де ви<br>працюєте?</div>
+  </div>
+  <div class="quiz-body">
+    <button class="opt-btn" onclick="pick('place','home',this)">
+      <span class="opt-ic">🏠</span> Домашній кабінет
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('place','salon',this)">
+      <span class="opt-ic">🏢</span> Салон (оренда місця)
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('place','own',this)">
+      <span class="opt-ic">🏪</span> Власна студія / салон
+      <span class="opt-check">✓</span>
+    </button>
+    <button class="opt-btn" onclick="pick('place','visit',this)">
+      <span class="opt-ic">🚗</span> Виїзд до клієнта
+      <span class="opt-check">✓</span>
+    </button>
+  </div>
+</div>
+
+<!-- ══════ LOADING ══════ -->
+<div class="screen" id="s-loading">
+  <div class="loader-wrap">
+    <div class="loader-ring"></div>
+    <span class="loader-icon">🔬</span>
+  </div>
+  <div class="loading-title">Рахую вашу цифру...</div>
+  <div class="loading-sub">Аналізую потенціал<br>вашої клієнтської бази</div>
+</div>
+
+<!-- ══════ RESULT ══════ -->
+<div class="screen" id="s-result">
+  <div class="result-hero" id="result-hero">
+    <span class="result-emoji" id="result-emoji">💸</span>
+    <div class="result-eyebrow">Ваш результат</div>
+    <div class="result-headline" id="result-headline">Завантаження...</div>
+  </div>
+  <div class="result-body" id="result-body"></div>
+  <div class="sticky-bar">
+    <button class="btn-main" onclick="goTo('s-offer')">🚀 Дізнатись, як отримати ці гроші</button>
+  </div>
+</div>
+
+<!-- ══════ OFFER ══════ -->
+<div class="screen" id="s-offer">
+  <div class="offer-header">
+    <div class="oh-badge">Стартовий набір</div>
+    <div class="oh-title">Що ви<br>отримуєте<br>при покупці</div>
+    <div class="oh-sub">Система «Один робочий день» — все необхідне для старту продажів</div>
+  </div>
+
+  <div class="offer-body">
+
+    <div class="section-title">📦 Що входить у стартовий набір</div>
+
+    <div class="include-card">
+      <div class="ic-header">
+        <span class="ic-header-icon">🧴</span>
+        <div>
+          <div class="ic-header-title">Косметика для клієнта</div>
+          <div class="ic-header-sub">Персональний підбір під ваш тип клієнтів</div>
+        </div>
+      </div>
+      <div class="ic-items">
+        <div class="ic-item"><span class="ic-dot"></span> Стартовий асортимент 10–15 позицій Formula SEA</div>
+        <div class="ic-item"><span class="ic-dot"></span> Підбір під вашу спеціалізацію (нігті, брови, косметологія…)</div>
+        <div class="ic-item"><span class="ic-dot"></span> Сертифікована органічна косметика власного виробництва</div>
+      </div>
+    </div>
+
+    <div class="include-card">
+      <div class="ic-header" style="background: linear-gradient(135deg, #8a7a4a, #b8955a);">
+        <span class="ic-header-icon">📚</span>
+        <div>
+          <div class="ic-header-title">Гайд-рекомендації</div>
+          <div class="ic-header-sub">Готові інструменти для продажу</div>
+        </div>
+      </div>
+      <div class="ic-items">
+        <div class="ic-item"><span class="ic-dot"></span> Готові скрипти продажу — без «впарювання», як порада експерта</div>
+        <div class="ic-item"><span class="ic-dot"></span> Гайд: як правильно рекомендувати косметику клієнту</div>
+        <div class="ic-item"><span class="ic-dot"></span> Маркетингові матеріали: листівки, QR-коди, картки</div>
+        <div class="ic-item"><span class="ic-dot"></span> Шаблони Stories для просування в Instagram</div>
+      </div>
+    </div>
+
+    <div class="section-title">💰 Ваша маржа</div>
+    <div class="margin-pill">
+      <div class="mp-left">
+        <div class="mp-label">З кожного продажу</div>
+        <div class="mp-val">100–150 грн</div>
+      </div>
+      <div class="mp-right">Партнерський прайс<br>40–60% знижка<br>від роздрібу</div>
+    </div>
+
+    <div class="section-title">🤝 Підтримка Олени</div>
+    <div class="include-card">
+      <div class="ic-items" style="padding-top:16px;">
+        <div class="ic-item"><span class="ic-dot"></span> Особиста підтримка доки не почнете заробляти</div>
+        <div class="ic-item"><span class="ic-dot"></span> Відповіді на питання щодо складу та рекомендацій</div>
+        <div class="ic-item"><span class="ic-dot"></span> Доступ до закритого чату майстрів-партнерів</div>
+        <div class="ic-item"><span class="ic-dot"></span> Оновлення асортименту та нові позиції</div>
+      </div>
+    </div>
+
+    <div class="section-title">💳 Вартість старту</div>
+    <div class="price-block">
+      <div class="pb-label">Стартовий набір</div>
+      <div class="pb-val">2 500–4 000 грн</div>
+      <div class="pb-sub">залежно від формату та обсягу</div>
+      <div class="pb-row">
+        <div class="pb-stat">
+          <div class="pb-stat-val">5–7</div>
+          <div class="pb-stat-lab">днів окупність</div>
+        </div>
+        <div class="pb-stat">
+          <div class="pb-stat-val">+40%</div>
+          <div class="pb-stat-lab">до чека</div>
+        </div>
+        <div class="pb-stat">
+          <div class="pb-stat-val">100–150</div>
+          <div class="pb-stat-lab">грн маржа/шт</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">❓ Часті питання</div>
+    <div class="faq-item">
+      <div class="faq-q">«Клієнти не куплять...»</div>
+      <div class="faq-a">Я навчу скрипту, після якого купує кожен 2-й. Ви не продаєте — ви рекомендуєте як експерт.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">«Я працюю вдома, немає вітрини»</div>
+      <div class="faq-a">80% партнерів — домашні майстри. Косметика стоїть на столі + каталог у телефоні.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">«Я не вмію продавати»</div>
+      <div class="faq-a">Готові скрипти зі стартового набору зроблять це за вас. Просто читайте — і рекомендуйте.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">«А якщо косметика не спрацює?»</div>
+      <div class="faq-a">Гарантія якості + заміна продукту. Сертифікована органічна формула — перевірена роками.</div>
+    </div>
+
+  </div>
+  <div class="sticky-bar">
+    <button class="btn-main" onclick="goTo('s-contacts')">💬 Написати та отримати набір</button>
+    <button class="btn-ghost" onclick="goTo('s-contacts')">📞 Поставити питання Олені</button>
+  </div>
+</div>
+
+<!-- ══════ CONTACTS ══════ -->
+<div class="screen" id="s-contacts">
+  <div class="contacts-hero">
+    <span class="ch-emoji">🚀</span>
+    <div class="ch-title">Готові<br>почати?</div>
+    <div class="ch-sub">Напишіть «ХОЧУ СТАРТОВИЙ НАБІР» — і я підберу формат для вас особисто 💚</div>
+  </div>
+
+  <div class="contacts-body">
+
+    <a class="contact-card cc-ig"
+       href="https://www.instagram.com/formula_sea.prolab?igsh=MWttbWdjeTkzbnQ3cA=="
+       target="_blank" rel="noopener">
+      <span class="cc-icon">📷</span>
+      <div>
+        <div class="cc-title">Instagram Direct</div>
+        <div class="cc-handle">@formula_sea.prolab</div>
+      </div>
+      <span class="cc-arrow">→</span>
+    </a>
+
+    <a class="contact-card cc-tg"
+       href="https://t.me/Strilko_Elena"
+       target="_blank" rel="noopener">
+      <span class="cc-icon">✈️</span>
+      <div>
+        <div class="cc-title">Telegram</div>
+        <div class="cc-handle">@Strilko_Elena</div>
+      </div>
+      <span class="cc-arrow">→</span>
+    </a>
+
+    <div class="contacts-divider">або</div>
+
+    <div class="keyword-box">
+      Напишіть будь-яким зручним способом:
+      <strong>«ХОЧУ СТАРТОВИЙ НАБІР»</strong>
+      і я відповім протягом 15 хвилин 💚
+    </div>
+
+    <div class="signature-block">
+      <div class="sig-name">Олена Стрілко</div>
+      <div class="sig-role">Технолог-розробник косметичних засобів</div>
+      <div class="sig-brand">Formula ProLab</div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<script>
+const D = { master:null, clients:null, check:null, sells:null, place:null };
+const MARGIN = 125;
+const CONV_YES = 0.40;
+const CONV_SOMETIMES = 0.12;
+
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function startQuiz() { goTo('s-q1'); }
+
+const nextMap = {
+  master: 's-q2',
+  clients: 's-q3',
+  check: 's-q4',
+  sells: 's-q5',
+  place: 'calc'
+};
+
+function pick(key, val, btn) {
+  btn.closest('.quiz-body').querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  D[key] = val;
+  setTimeout(() => {
+    const next = nextMap[key];
+    if (next === 'calc') { goTo('s-loading'); setTimeout(calc, 2000); }
+    else goTo(next);
+  }, 320);
+}
+
+function customPick(key, inpId, nextId) {
+  const v = parseFloat(document.getElementById(inpId).value);
+  if (!v || v <= 0) { document.getElementById(inpId).style.borderColor='#d4756a'; return; }
+  D[key] = v;
+  goTo(nextId);
+}
+
+function fmt(n) {
+  return Math.round(n).toLocaleString('uk-UA') + ' грн';
+}
+
+function calc() {
+  const c = D.clients || 60;
+  const s = D.sells;
+  let heroEmoji, headline, bodyHtml;
+
+  if (s === 'no') {
+    const loss = c * MARGIN;
+    const lossY = loss * 12;
+    const pot = c * CONV_YES * MARGIN;
+    heroEmoji = '😱';
+    headline = 'Ви щомісяця<br>недоотримуєте';
+    bodyHtml = `
+      <div class="rcard rcard-loss">
+        <div class="rc-label">Втрачаєте щомісяця</div>
+        <div class="rc-amount">${fmt(loss)}</div>
+        <div class="rc-period">${c} клієнтів × ${MARGIN} грн маржа</div>
+        <div class="rc-year">💸 За рік: <strong>${fmt(lossY)}</strong> — це ціна нового авто</div>
+      </div>
+      <div class="insight">
+        Ці гроші вже <strong>є у ваших клієнтів</strong>. Вони купують косметику — просто <strong>не у вас</strong>.
+      </div>
+      <div class="rcard rcard-gain">
+        <div class="rc-label">Ваш потенціал з Formula ProLab</div>
+        <div class="rc-amount">+${fmt(pot)}</div>
+        <div class="rc-period">на місяць при системному підході</div>
+        <div class="rc-year">💚 За рік: <strong>+${fmt(pot*12)}</strong></div>
+      </div>
+      <div class="insight">
+        Без зміни графіка. Без «впарювання». Просто <strong>одна професійна рекомендація</strong> — і частина чека стає вашою.
+      </div>
+    `;
+  } else if (s === 'sometimes') {
+    const now = c * CONV_SOMETIMES * MARGIN;
+    const pot = c * CONV_YES * MARGIN;
+    const delta = pot - now;
+    heroEmoji = '🤔';
+    headline = 'Ви на півдорозі<br>до своїх грошей';
+    bodyHtml = `
+      <div class="compare-2col">
+        <div class="c2 now">
+          <div class="c2-lab">Зараз (несистемно)</div>
+          <div class="c2-val">${fmt(now)}</div>
+          <div class="c2-sub">на місяць</div>
+        </div>
+        <div class="c2 future">
+          <div class="c2-lab">З Formula ProLab</div>
+          <div class="c2-val">${fmt(pot)}</div>
+          <div class="c2-sub">на місяць</div>
+        </div>
+      </div>
+      <div class="rcard rcard-loss">
+        <div class="rc-label">Недоотримуєте щомісяця</div>
+        <div class="rc-amount">${fmt(delta)}</div>
+        <div class="rc-period">різниця між «іноді» і «системно»</div>
+        <div class="rc-year">💸 За рік: <strong>${fmt(delta*12)}</strong></div>
+      </div>
+      <div class="insight">
+        Різниця між «іноді» і «системно» — це ваша <strong>стабільність і впевненість</strong>. Маржа 100–150 грн з кожного продажу.
+      </div>
+    `;
+  } else {
+    const now = c * 0.25 * MARGIN;
+    const pot = c * CONV_YES * (MARGIN + 25);
+    const delta = pot - now;
+    heroEmoji = '💡';
+    headline = 'Ви вже на<br>правильному шляху!';
+    bodyHtml = `
+      <div class="compare-2col">
+        <div class="c2 now">
+          <div class="c2-lab">Зараз (оцінка)</div>
+          <div class="c2-val">${fmt(now)}</div>
+          <div class="c2-sub">на місяць</div>
+        </div>
+        <div class="c2 future">
+          <div class="c2-lab">З Formula ProLab</div>
+          <div class="c2-val">${fmt(pot)}</div>
+          <div class="c2-sub">на місяць</div>
+        </div>
+      </div>
+      <div class="rcard rcard-gain">
+        <div class="rc-label">Додатковий приріст</div>
+        <div class="rc-amount">+${fmt(delta)}</div>
+        <div class="rc-period">на місяць</div>
+        <div class="rc-year">💎 За рік: <strong>+${fmt(delta*12)}</strong></div>
+      </div>
+      <div class="insight">
+        З правильними продуктами Formula ProLab та системою маржа зростає до <strong>100–150+ грн</strong> з позиції, а конверсія — до 40% клієнтів.
+      </div>
+    `;
+  }
+
+  document.getElementById('result-emoji').textContent = heroEmoji;
+  document.getElementById('result-headline').innerHTML = headline;
+  document.getElementById('result-body').innerHTML = bodyHtml;
+  goTo('s-result');
+}
+</script>
+</body>
+</html>
