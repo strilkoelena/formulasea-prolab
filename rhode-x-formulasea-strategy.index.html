@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rhode × Formula SEA — Гібридна Стратегія 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sage: #7a9e7e;
+  --pistachio: #b5c9a1;
+  --pistachio-light: #deecd5;
+  --cream: #f6f1e9;
+  --deep: #2c3e2d;
+  --charcoal: #3d3d3d;
+  --gold: #c8a96e;
+  --gold-light: #ecdfc0;
+  --white: #fefefe;
+  --rhode-grey: #9ba8a0;
+  --rhode-light: #e8eeeb;
+  --blue: #4a6fa5;
+  --red: #b85c4a;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--charcoal); line-height: 1.7; }
+
+/* HERO */
+.hero {
+  background: var(--deep);
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media(max-width:600px){ .hero-split { grid-template-columns: 1fr; } }
+.hero-left {
+  padding: 50px 36px;
+  position: relative;
+  z-index: 2;
+}
+.hero-right {
+  background: linear-gradient(135deg, #3d5c40 0%, #1e2e1f 100%);
+  padding: 50px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 30px;
+  padding: 7px 16px;
+  margin-bottom: 22px;
+}
+.brand-pill {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.pill-rhode { color: #c8d5cf; }
+.pill-sep { color: rgba(255,255,255,0.3); }
+.pill-sea { color: var(--pistachio); }
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 4vw, 38px);
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero-sub { font-size: 14px; color: rgba(255,255,255,0.65); font-weight: 300; max-width: 400px; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.meta-tag {
+  background: rgba(181,201,161,0.15);
+  border: 1px solid rgba(181,201,161,0.3);
+  color: var(--pistachio);
+  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 20px;
+}
+.rhode-stat {
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+}
+.rhode-stat .val {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.rhode-stat .lbl { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+/* TABS */
+.tabs-bar {
+  background: var(--white);
+  border-bottom: 2px solid var(--pistachio-light);
+  display: flex;
+  overflow-x: auto;
+  padding: 0 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  scrollbar-width: none;
+}
+.tabs-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 15px 16px 13px;
+  font-family: 'Jost', sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #999;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--sage); }
+.tab-btn.active { color: var(--deep); border-bottom-color: var(--sage); font-weight: 700; }
+
+/* CONTENT */
+.content { max-width: 920px; margin: 0 auto; padding: 40px 18px 80px; }
+.section { display: none; }
+.section.active { display: block; animation: fadeUp 0.3s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px) } to { opacity:1; transform:translateY(0) } }
+
+.sec-title { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--deep); margin-bottom: 6px; }
+.sec-sub {
+  font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 28px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--pistachio-light);
+}
+
+/* COMPARE CARD */
+.compare-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+@media(max-width:600px){ .compare-card { grid-template-columns: 1fr; } }
+.compare-side {
+  padding: 24px 22px;
+}
+.compare-rhode { background: var(--rhode-light); }
+.compare-sea { background: #eef5eb; }
+.compare-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lbl-rhode { color: var(--rhode-grey); }
+.lbl-sea { color: var(--sage); }
+.compare-side h3 { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--deep); margin-bottom: 10px; }
+.compare-side p, .compare-side li { font-size: 13px; color: #555; line-height: 1.7; }
+.compare-side ul { padding-left: 16px; }
+.compare-side li { margin-bottom: 4px; }
+
+/* CARD */
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 22px 26px;
+  margin-bottom: 18px;
+  border-left: 4px solid var(--sage);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+.card-gold { border-left-color: var(--gold); }
+.card-blue { border-left-color: var(--blue); }
+.card-red { border-left-color: var(--red); }
+.card h3 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--deep); margin-bottom: 12px; }
+.card p, .card li { font-size: 13.5px; color: #555; line-height: 1.7; }
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 18px; }
+@media(max-width:600px){ .grid-2,.grid-3 { grid-template-columns: 1fr; } }
+
+.mini-card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border-top: 3px solid var(--pistachio);
+}
+.mini-card.gold-top { border-top-color: var(--gold); }
+.mini-card.deep-top { border-top-color: var(--deep); }
+.mini-card.rhode-top { border-top-color: var(--rhode-grey); }
+.mini-card h4 { font-size: 12px; font-weight: 800; color: var(--deep); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+.mini-card p, .mini-card li { font-size: 13px; color: #666; line-height: 1.6; }
+.mini-card ul { padding-left: 14px; }
+.mini-card li { margin-bottom: 3px; }
+
+/* INSIGHT */
+.insight {
+  background: linear-gradient(135deg,#eef5ea,#f5f0e8);
+  border: 1px solid var(--pistachio);
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin: 14px 0;
+  font-size: 13.5px;
+  color: var(--deep);
+}
+.insight::before { content: '💡 '; }
+.trust-box {
+  background: linear-gradient(135deg,#eef0f8,#e8f0fb);
+  border: 1px solid rgba(74,111,165,0.3);
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin: 14px 0;
+  font-size: 13.5px;
+  color: #2d3a5c;
+}
+.trust-box::before { content: '📊 Edelman 2026: '; font-weight: 800; }
+
+/* TABLE */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 18px; }
+.data-table th { background: var(--deep); color: var(--white); padding: 10px 14px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; }
+.data-table td { padding: 10px 14px; border-bottom: 1px solid var(--pistachio-light); color: #555; vertical-align: top; }
+.data-table tr:nth-child(even) td { background: #f9f7f3; }
+.data-table tr:hover td { background: var(--pistachio-light); transition: 0.15s; }
+
+/* STEPS */
+.steps { }
+.step-item { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+.step-num {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--deep);
+  color: var(--white);
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
+}
+.step-body { font-size: 13.5px; color: #555; padding-top: 4px; }
+.step-body strong { color: var(--deep); display: block; font-size: 15px; margin-bottom: 3px; }
+
+/* KPI ROW */
+.kpi-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+.kpi-chip {
+  background: var(--white);
+  border: 2px solid var(--pistachio);
+  border-radius: 10px;
+  padding: 12px 16px;
+  text-align: center;
+  flex: 1;
+  min-width: 100px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.kpi-chip .val { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--deep); font-weight: 700; }
+.kpi-chip .lbl { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; }
+
+/* CONTENT PILLAR */
+.pillar {
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+}
+.pillar-head {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pillar-head.sage-bg { background: var(--deep); }
+.pillar-head.gold-bg { background: #7a5c20; }
+.pillar-head.rhode-bg { background: #4a6060; }
+.pillar-title { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--white); }
+.pillar-pct { background: rgba(255,255,255,0.2); color: var(--white); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 12px; margin-left: auto; }
+.pillar-body { padding: 16px 20px; font-size: 13px; color: #555; }
+.pillar-body li { margin-bottom: 6px; line-height: 1.6; }
+
+/* POST PREVIEW */
+.post-preview {
+  background: var(--white);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 18px;
+  box-shadow: 0 3px 16px rgba(0,0,0,0.08);
+}
+.post-header {
+  background: var(--deep);
+  color: var(--white);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+.post-num {
+  background: var(--gold);
+  color: var(--deep);
+  font-weight: 800;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.post-body { padding: 16px 18px; font-size: 13px; color: #555; }
+.post-hook {
+  background: rgba(181,201,161,0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 700;
+  color: var(--deep);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.post-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.post-tag { background: var(--pistachio-light); color: var(--deep); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 12px; }
+.post-tag.gold { background: var(--gold-light); }
+
+/* LAUNCH CALENDAR */
+.cal-week {
+  background: var(--white);
+  border-radius: 12px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.cal-head {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+.cal-head.w1 { background: var(--deep); color: var(--white); }
+.cal-head.w2 { background: #3a5e4a; color: var(--white); }
+.cal-head.w3 { background: #5c4a20; color: var(--white); }
+.cal-head.w4 { background: var(--blue); color: var(--white); }
+.cal-head.w5 { background: #4a3060; color: var(--white); }
+.cal-week-num { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
+.cal-head-title { font-size: 14px; font-weight: 600; }
+.cal-head-sub { font-size: 12px; opacity: 0.7; margin-left: auto; }
+.cal-body { padding: 16px 20px; font-size: 13px; color: #555; display: none; }
+.cal-body.open { display: block; }
+.cal-day { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--pistachio-light); align-items: flex-start; }
+.cal-day:last-child { border-bottom: none; }
+.day-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--deep); color: var(--white); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.day-content { flex: 1; }
+.day-format { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--sage); margin-bottom: 2px; }
+.day-topic { font-size: 13.5px; color: var(--deep); font-weight: 500; }
+.day-cta { font-size: 12px; color: var(--gold); margin-top: 2px; }
+
+/* ACCORDION */
+.acc { margin-bottom: 10px; }
+.acc-h {
+  background: var(--white);
+  border: 1px solid var(--pistachio-light);
+  border-radius: 8px;
+  padding: 13px 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--deep);
+  transition: background 0.2s;
+}
+.acc-h:hover { background: var(--pistachio-light); }
+.acc-h.open { background: var(--deep); color: var(--white); border-radius: 8px 8px 0 0; }
+.acc-b {
+  display: none;
+  border: 1px solid var(--pistachio-light);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 14px 16px;
+  background: #fafaf7;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.7;
+}
+.acc-b.open { display: block; }
+.chevron { transition: transform 0.25s; font-size: 12px; }
+.acc-h.open .chevron { transform: rotate(180deg); }
+
+/* FORMULA EQUATION */
+.equation {
+  background: var(--deep);
+  color: var(--white);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.eq-parts { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+.eq-part {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+}
+.eq-part span { display: block; font-family: 'Jost', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+.eq-op { font-size: 22px; color: var(--gold); font-weight: 700; }
+.eq-result {
+  margin-top: 18px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--gold);
+}
+
+/* BOT MSG */
+.bot-msg {
+  background: #e8f0e9;
+  border-radius: 12px 12px 12px 2px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--deep);
+  max-width: 82%;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+.bot-msg.user {
+  background: var(--pistachio-light);
+  border-radius: 12px 12px 2px 12px;
+  margin-left: auto;
+}
+
+blockquote {
+  border-left: 3px solid var(--gold);
+  padding: 12px 18px;
+  margin: 16px 0;
+  background: rgba(200,169,110,0.08);
+  border-radius: 0 8px 8px 0;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--deep);
+  font-size: 15px;
+}
+
+.tag-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+.tag { background: var(--pistachio-light); color: var(--deep); font-size: 11.5px; font-weight: 600; padding: 4px 11px; border-radius: 16px; }
+.tag.d { background: var(--deep); color: var(--white); }
+.tag.g { background: var(--gold-light); }
+
+.footer {
+  background: var(--deep);
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  padding: 28px 20px;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-split">
+    <div class="hero-left">
+      <div class="brand-badge">
+        <span class="brand-pill pill-rhode">Rhode</span>
+        <span class="pill-sep">×</span>
+        <span class="brand-pill pill-sea">Formula SEA</span>
+      </div>
+      <h1>Гібридна Стратегія<br><em>Краси та Довіри</em><br>2026</h1>
+      <p class="hero-sub">Мистецтво Rhode — ефект засновника, вірусний UGC, спільнота. Наука Formula SEA — механізм, бар'єр, протокол. Разом = нова категорія на UA ринку.</p>
+      <div class="hero-meta">
+        <span class="meta-tag">📊 Edelman Trust 2026</span>
+        <span class="meta-tag">🌿 Formula SEA ProLab</span>
+        <span class="meta-tag">📱 B2C Instagram</span>
+        <span class="meta-tag">🚀 Rhode Framework</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="rhode-stat">
+        <div class="val">$1B</div>
+        <div class="lbl">Rhode придбана e.l.f. Beauty — з 3 продуктів за 3 роки</div>
+      </div>
+      <div class="rhode-stat">
+        <div class="val">62%</div>
+        <div class="lbl">мікро-інфлюенсери = основа стратегії Rhode</div>
+      </div>
+      <div class="rhode-stat">
+        <div class="val">62%</div>
+        <div class="lbl">Edelman: довіра через рекомендацію знайомого інфлюенсера</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="showTab('formula')">⚗️ Формула Успіху</button>
+  <button class="tab-btn" onclick="showTab('compare')">⚖️ Rhode vs SEA</button>
+  <button class="tab-btn" onclick="showTab('pillars')">🏛️ Стовпи контенту</button>
+  <button class="tab-btn" onclick="showTab('posts')">✍️ Пости</button>
+  <button class="tab-btn" onclick="showTab('drops')">🎯 Дроп-стратегія</button>
+  <button class="tab-btn" onclick="showTab('ugc')">🤳 UGC система</button>
+  <button class="tab-btn" onclick="showTab('calendar')">📅 Контент-план</button>
+  <button class="tab-btn" onclick="showTab('scale')">📈 Масштабування</button>
+</div>
+
+<div class="content">
+
+  <!-- ═══ FORMULA ═══ -->
+  <div class="section active" id="formula">
+    <div class="sec-title">Формула Гібридної Стратегії</div>
+    <div class="sec-sub">Rhode playbook + Formula SEA expertise + Edelman Trust = нова позиція</div>
+
+    <div class="equation">
+      <div class="eq-parts">
+        <div class="eq-part"><span>Rhode</span>Засновник<br>як бренд</div>
+        <div class="eq-op">+</div>
+        <div class="eq-part"><span>Rhode</span>Вірусний<br>UGC + дропи</div>
+        <div class="eq-op">+</div>
+        <div class="eq-part"><span>Formula SEA</span>Механізм<br>+ Протокол</div>
+        <div class="eq-op">+</div>
+        <div class="eq-part"><span>Edelman</span>Довіра через<br>близьке коло</div>
+      </div>
+      <div class="eq-result">"Олена — це Хейлі Бібер, яка знає хімію і дбає про твій бар'єр"</div>
+    </div>
+
+    <div class="trust-box">Edelman 2026: 70% людей відступають у знайоме коло довіри. Але 62% відкриваються новим брендам через рекомендацію інфлюенсера. Rhode побудував довіру через Хейлі. Formula SEA будує через Олену-технолога — ще сильніша позиція, бо вона не знаменитість, вона СВОЯ.</div>
+
+    <div class="card card-blue">
+      <h3>📌 Чому Rhode — правильний зразок для Formula SEA (і де треба адаптувати)</h3>
+      <table class="data-table">
+        <thead><tr><th>Принцип Rhode</th><th>Що взяти</th><th>Адаптація для SEA</th></tr></thead>
+        <tbody>
+          <tr><td>Засновник = бренд</td><td>✅ Повністю</td><td>Олена замість Хейлі. Технолог — сильніше за модель</td></tr>
+          <tr><td>Мінімум SKU → один герой</td><td>✅ Повністю</td><td>S.E.T. = 3 продукти = 1 система = герой</td></tr>
+          <tr><td>Глазований ефект (Glazed Skin тренд)</td><td>✅ Адаптувати</td><td>"Стабільна, здорова шкіра" замість "сяюча" — чесніше для ЦА</td></tr>
+          <tr><td>Вірусні дропи + FOMO</td><td>✅ Адаптувати</td><td>Обмежені партії, сезонні формули, "Нова партія — 30 наборів"</td></tr>
+          <tr><td>UGC як core стратегія</td><td>✅ Повністю</td><td>Щоденник 14 днів замість просто відгуків</td></tr>
+          <tr><td>Мікро-інфлюенсери 60%+</td><td>✅ Повністю</td><td>UA мікро 1–10K, ніша чутлива шкіра / постакне</td></tr>
+          <tr><td>Lifestyle + рутина засновника</td><td>✅ Повністю</td><td>Олена в лабораторії + Олена вдома з протоколом</td></tr>
+          <tr><td>Pop-up / фізична подія</td><td>⏳ Пізніше</td><td>Одеса майстер-клас після 1К продажів</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card card-gold">
+      <h3>🎯 Ключова різниця: Rhode продає естетику, Formula SEA продає рішення</h3>
+      <div class="grid-2">
+        <div class="mini-card rhode-top">
+          <h4>Rhode — Why Buy</h4>
+          <ul>
+            <li>Хочу виглядати як Хейлі</li>
+            <li>Це красиво і естетично</li>
+            <li>Всі говорять про Rhode</li>
+            <li>Мінімалізм = trendy</li>
+          </ul>
+        </div>
+        <div class="mini-card gold-top">
+          <h4>Formula SEA — Why Buy</h4>
+          <ul>
+            <li>Хочу, щоб шкіра перестала реагувати</li>
+            <li>Я втомилась пробувати — це система</li>
+            <li>Олена пояснила ЧОМУ це працює</li>
+            <li>Результат за 14 днів підтверджений</li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight" style="margin-top:12px;">Formula SEA грає в категорії ВИЩОЇ довіри — не "красиве", а "вирішує проблему". За Edelman 2026, рішення = вища цінність ніж естетика в умовах економічної тривоги.</div>
+    </div>
+
+    <div class="card">
+      <h3>🔑 5 принципів Rhode, які Formula SEA впроваджує негайно</h3>
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>Founder-Led Content — Олена в кожному пості</strong>
+            Rhode: Хейлі знімає ранкову рутину в кухні — не студія, не реклама. Formula SEA: Олена знімає зважування інгредієнтів, перевірку pH, нанесення на свою шкіру. Це не продукт — це людина.
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>Always-On + Product Drops — ритм контенту</strong>
+            Rhode: щоденний освітній контент + рідкі вибухові запуски. Formula SEA: щоденні пости про механізм + "Нова партія S.E.T. — 20 наборів" раз на місяць.
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Micro-First Influencer Strategy</strong>
+            Rhode: 62% активацій через мікро-креаторів. Formula SEA: 5–8 мікро-інфлюенсерів 1–10K, ніша чутлива шкіра / ЗСЖ Одеса-Україна, бартер за щоденник 14 днів.
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>UGC як операційна система</strong>
+            Rhode: #Rhode = 356K постів від фанів. Formula SEA: #FormulaSea14days — щоденник-трансформація кожного клієнта = потік живого контенту.
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>Scarcity + FOMO (обережно, адаптовано)</strong>
+            Rhode: розпродажі за хвилини. Formula SEA: "Партія №5 — 25 наборів. Наступна через 3 тижні (час виробництва)" — це правда, а не маніпуляція. Edelman: чесність = довіра.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ COMPARE ═══ -->
+  <div class="section" id="compare">
+    <div class="sec-title">Rhode × Formula SEA: Детальне Порівняння</div>
+    <div class="sec-sub">Що брати, що адаптувати, що будувати своє</div>
+
+    <div class="compare-card">
+      <div class="compare-side compare-rhode">
+        <div class="compare-label lbl-rhode">● Rhode</div>
+        <h3>Позиціювання</h3>
+        <p>Мінімалістична б'юті-естетика. "Glazed Donut Skin" — конкретний образ результату. Lifestyle бренд через засновника.</p>
+      </div>
+      <div class="compare-side compare-sea">
+        <div class="compare-label lbl-sea">● Formula SEA</div>
+        <h3>Позиціювання</h3>
+        <p><strong>Система відновлення бар'єру.</strong> "Стабільна шкіра, яка перестала реагувати" — конкретний вирішений біль. Expertise бренд через технолога.</p>
+      </div>
+    </div>
+
+    <div class="compare-card">
+      <div class="compare-side compare-rhode">
+        <div class="compare-label lbl-rhode">● Rhode</div>
+        <h3>Контент-формула</h3>
+        <ul>
+          <li>GRWM (Get Ready With Me)</li>
+          <li>Текстурні відео продуктів</li>
+          <li>Рутина Хейлі вдома</li>
+          <li>UGC репости</li>
+          <li>Вірусні drop-анонси</li>
+        </ul>
+      </div>
+      <div class="compare-side compare-sea">
+        <div class="compare-label lbl-sea">● Formula SEA</div>
+        <h3>Контент-формула</h3>
+        <ul>
+          <li><strong>GRWM + пояснення механізму</strong></li>
+          <li>Закулісся формулювання</li>
+          <li>Протокол Олени вранці</li>
+          <li>UGC щоденники 14 днів</li>
+          <li><strong>Партія-дроп + очікування</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="compare-card">
+      <div class="compare-side compare-rhode">
+        <div class="compare-label lbl-rhode">● Rhode</div>
+        <h3>Ціна / Модель</h3>
+        <p>$18–$38 за продукт. D2C → потім Sephora. Масовий ринок Gen Z / Millennials.</p>
+      </div>
+      <div class="compare-side compare-sea">
+        <div class="compare-label lbl-sea">● Formula SEA</div>
+        <h3>Ціна / Модель</h3>
+        <p><strong>1 000 ₴ за протокол (система з 3 продуктів).</strong> D2C Instagram → Direct. Premium positioning через експертизу. Жінки 25–45 з хронічною проблемою.</p>
+      </div>
+    </div>
+
+    <div class="compare-card">
+      <div class="compare-side compare-rhode">
+        <div class="compare-label lbl-rhode">● Rhode</div>
+        <h3>Довіра (Edelman lens)</h3>
+        <p>Хейлі Бібер = знаменитість з 55М фоловерів. Довіра через масштаб і впізнаваність. Люди купують бо "хочуть бути схожими".</p>
+      </div>
+      <div class="compare-side compare-sea">
+        <div class="compare-label lbl-sea">● Formula SEA</div>
+        <h3>Довіра (Edelman lens)</h3>
+        <p><strong>Олена = "свій експерт" у близькому колі. Edelman: довіра до знайомого > знаменитості.</strong> Люди купують бо "вона розуміє мою проблему і знає рішення".</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🏆 Де Formula SEA об'єктивно сильніша за Rhode</h3>
+      <div class="grid-3">
+        <div class="mini-card deep-top">
+          <h4>Глибина довіри</h4>
+          <p>Rhode продає образ. Formula SEA продає механізм і результат. Edelman: глибша довіра = вища лояльність і LTV.</p>
+        </div>
+        <div class="mini-card deep-top">
+          <h4>Локальна перевага</h4>
+          <p>"Власне виробництво Одеса" — Rhode так не може. Локальний бренд в UA 2026 = значна перевага у довірі.</p>
+        </div>
+        <div class="mini-card deep-top">
+          <h4>Вирішення болю</h4>
+          <p>Rhode = бажання. Formula SEA = потреба. Люди з хронічною чутливою шкірою готові платити більше за рішення.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PILLARS ═══ -->
+  <div class="section" id="pillars">
+    <div class="sec-title">5 Стовпів Контенту</div>
+    <div class="sec-sub">Rhode x Formula SEA — гібридна матриця</div>
+
+    <div class="kpi-row">
+      <div class="kpi-chip"><div class="val">35%</div><div class="lbl">Механізм</div></div>
+      <div class="kpi-chip"><div class="val">25%</div><div class="lbl">Засновник</div></div>
+      <div class="kpi-chip"><div class="val">20%</div><div class="lbl">UGC</div></div>
+      <div class="kpi-chip"><div class="val">12%</div><div class="lbl">Дропи</div></div>
+      <div class="kpi-chip"><div class="val">8%</div><div class="lbl">Продаж</div></div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-head sage-bg">
+        <div>🔬</div>
+        <div class="pillar-title">Стовп 1 — Механізм (Science Storytelling)</div>
+        <div class="pillar-pct">35%</div>
+      </div>
+      <div class="pillar-body">
+        <strong style="color:var(--deep); display:block; margin-bottom:8px;">Унікальність: Rhode цього не робить → це найсильніша диференціація</strong>
+        <ul>
+          <li>Пояснення TEWL, pH, ламелярної структури простою мовою</li>
+          <li>Розбір складу — "Ось чому кожен інгредієнт тут"</li>
+          <li>Порівняльний аналіз: "Ось чому популярний продукт X не відновлює бар'єр"</li>
+          <li>Серія "Міф vs Факт" про чутливу шкіру</li>
+          <li>Анімаційні схеми (можна просто Canva): бар'єр до/після</li>
+          <li>Відповіді на питання підписників — live Q&A</li>
+        </ul>
+        <div style="margin-top:10px; font-size:12px; color:var(--blue); font-weight:600;">Edelman: механізм = антитеза дезінформації. 70% вірять хоча б одному б'юті-міту → Formula SEA = голос правди.</div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-head" style="background:#3a5060;">
+        <div>👩‍🔬</div>
+        <div class="pillar-title">Стовп 2 — Засновник (Rhode Framework)</div>
+        <div class="pillar-pct">25%</div>
+      </div>
+      <div class="pillar-body">
+        <strong style="color:var(--deep); display:block; margin-bottom:8px;">Rhode playbook: автентичний контент засновника = найвища конверсія</strong>
+        <ul>
+          <li>Ранкова рутина Олени — як вона сама використовує S.E.T. (Rhode GRWM)</li>
+          <li>День з технолога: від ідеї до формули (закулісся виробництва)</li>
+          <li>Чесні моменти: "Ця формула не спрацювала — ось чому переробила"</li>
+          <li>Олена відповідає на критику — прямо і з повагою</li>
+          <li>Думки Олени про б'юті-тренди (корисно чи шкідливо для бар'єру?)</li>
+          <li>Особиста шкіра Олени — її власний протокол (вразливість = довіра)</li>
+        </ul>
+        <div style="margin-top:10px; font-size:12px; color:var(--sage); font-weight:600;">Edelman: довіра до "свого CEO/засновника" +9 пунктів. Rhode: Хейлі = 55М. Олена = 970, але ЇЇ довіра глибша на масштаб.</div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-head" style="background:#4a5c30;">
+        <div>🤳</div>
+        <div class="pillar-title">Стовп 3 — UGC & Спільнота (Rhode Core)</div>
+        <div class="pillar-pct">20%</div>
+      </div>
+      <div class="pillar-body">
+        <strong style="color:var(--deep); display:block; margin-bottom:8px;">Rhode: UGC = операційна система бренду. Formula SEA адаптує під протокол.</strong>
+        <ul>
+          <li>Щоденник 14 днів — клієнти знімають день 1, 7, 14 (структурований UGC)</li>
+          <li>Репост з коментарем Олени: "Ось що відбулось з бар'єром Марини на 7-й день"</li>
+          <li>Челлендж #FormulaSea14days — клієнти тегують, Олена відповідає особисто</li>
+          <li>Розбір складу поточного крему підписника (інтерактив, виклик)</li>
+          <li>До/після — але завжди з поясненням механізму (відмінність від Rhode)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-head" style="background:#6b4a1a;">
+        <div>🎯</div>
+        <div class="pillar-title">Стовп 4 — Дропи & Анонси (Rhode Scarcity)</div>
+        <div class="pillar-pct">12%</div>
+      </div>
+      <div class="pillar-body">
+        <strong style="color:var(--deep); display:block; margin-bottom:8px;">Rhode: обмежені дропи = культ бренду. Адаптація: чесна обмеженість виробництва.</strong>
+        <ul>
+          <li>"Партія №6 — виробляємо 30 наборів, старт через 5 днів" — реальна обмеженість</li>
+          <li>Тизер нової формули: "Тестую нову версію пінки — 3 тижні тестів"</li>
+          <li>Сезонна адаптація: "Зимова формула — більше церамідів NP"</li>
+          <li>Листочок очікування: "Напиши ПАРТІЯ — повідомлю першою"</li>
+          <li>Закулісся підготовки партії — процес пакування, перевірка</li>
+        </ul>
+        <div style="margin-top:10px; font-size:12px; color:var(--gold); font-weight:600;">Rhode продав 440,000 листочків очікування на Peptide Lip Treatment. Formula SEA: "30 наборів" + список очікування = той самий FOMO на мікрорівні.</div>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-head" style="background:var(--blue);">
+        <div>💰</div>
+        <div class="pillar-title">Стовп 5 — Конверсія (Продаж)</div>
+        <div class="pillar-pct">8%</div>
+      </div>
+      <div class="pillar-body">
+        <strong style="color:var(--deep); display:block; margin-bottom:8px;">Продаємо рідко, але точно — через 4 тригери бота + прямий оффер</strong>
+        <ul>
+          <li>Пост-пропозиція після серії освітніх (Rhode pattern: будуємо бажання перед оффером)</li>
+          <li>"Цього місяця — 25 наборів S.E.T. Якщо впізнаєш свій бар'єр — пиши SET"</li>
+          <li>Порівняння: "1 000 ₴ за систему або 3 000 ₴ за 3 окремі продукти різних брендів?"</li>
+          <li>Кейс + оффер: "Саша, 31 рік. 14 днів. І ось що вона написала. Твоя черга."</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ POSTS ═══ -->
+  <div class="section" id="posts">
+    <div class="sec-title">10 Готових Постів з Caption</div>
+    <div class="sec-sub">Rhode x Formula SEA — гібридний формат</div>
+
+    <div class="post-preview">
+      <div class="post-header"><div class="post-num">1</div>Reel — Founder Morning Routine (Rhode GRWM + Science)</div>
+      <div class="post-body">
+        <div class="post-hook">🎣 "POV: Ранок технолога-формулятора — і чому мій протокол саме такий"</div>
+        <strong style="color:var(--deep);">Caption:</strong><br>
+        7:45. Одеса. Моє обличчя до протоколу — після ночі, коли бар'єр відновлюється найактивніше.<br><br>
+        Крок 1: Пінка. pH 5.2 — не руйную, а очищаю.<br>
+        Крок 2: Сироватка. 30 секунд — тонкий шар.<br>
+        Крок 3: Ламелярний крем. Відчуття, ніби шкіра "видихає".<br><br>
+        Я не роблю 10 кроків. Я роблю 3 — які мають механізм.<br><br>
+        💬 Яка зараз твоя ранкова рутина? Пиши в коментарях 👇
+        <div class="post-meta">
+          <span class="post-tag">Reel / Stories</span>
+          <span class="post-tag gold">Засновник</span>
+          <span class="post-tag">90 сек</span>
+          <span class="post-tag">#FormulaSeaProLab</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-preview">
+      <div class="post-header"><div class="post-num">2</div>Carousel — "Rhode vs Formula SEA: порівняння підходів"</div>
+      <div class="post-body">
+        <div class="post-hook">🎣 "Два мінімалістичних бренди. Але різна філософія."</div>
+        <strong style="color:var(--deep);">Caption:</strong><br>
+        Rhode — естетика. "Glazed Skin".<br>
+        Formula SEA — відновлення. "Стабільна шкіра".<br><br>
+        Обидва вірять у: мінімум продуктів. Системний підхід. Засновник = бренд.<br><br>
+        Різниця: Rhode продає образ мрії. Ми продаємо вирішення болю.<br><br>
+        Якщо твоя шкіра реагує — тобі не потрібна естетика. Тобі потрібна система.<br><br>
+        💬 Пиши BARRIER — підберу протокол під твою ситуацію.
+        <div class="post-meta">
+          <span class="post-tag">Carousel 5 слайдів</span>
+          <span class="post-tag gold">Механізм</span>
+          <span class="post-tag">#чутливашкіра</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-preview">
+      <div class="post-header"><div class="post-num">3</div>Reel — Drop Announcement (Rhode Scarcity Style)</div>
+      <div class="post-body">
+        <div class="post-hook">🎣 "Партія №7 — готова. 25 наборів. Старт п'ятниця 18:00."</div>
+        <strong style="color:var(--deep);">Caption:</strong><br>
+        3 тижні виробництва.<br>
+        Контроль pH кожного компоненту.<br>
+        25 наборів S.E.T. Протоколу.<br><br>
+        Попередні 2 партії розійшлись за 48 годин.<br><br>
+        Щоб отримати повідомлення першою — напиши ПАРТІЯ 👇<br>
+        Старт: п'ятниця, 18:00 за Одесою.<br><br>
+        P.S. Це не маркетинг. Виробництво реально займає 3 тижні. Тому 25 — не 250.
+        <div class="post-meta">
+          <span class="post-tag">Reel 30 сек</span>
+          <span class="post-tag gold">Дроп</span>
+          <span class="post-tag">FOMO чесний</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-preview">
+      <div class="post-header"><div class="post-num">4</div>Reel — "Розбираю склад популярного крему" (Rhode confidence)</div>
+      <div class="post-body">
+        <div class="post-hook">🎣 "Технолог читає склад крему 'для чутливої шкіри' з аптеки"</div>
+        <strong style="color:var(--deep);">Caption:</strong><br>
+        Без осуду. Без агресії. Просто хімія.<br><br>
+        Хороший продукт. Але ось чого немає:<br>
+        → Ламелярної структури<br>
+        → Контролю pH під бар'єр<br>
+        → Синергії церамідів і холестеролу<br><br>
+        Тому він зволожує. Але не відновлює.<br>
+        Різниця важлива, якщо твоя шкіра реактивна.<br><br>
+        💬 Напиши назву свого крему — зроблю розбір в Stories.
+        <div class="post-meta">
+          <span class="post-tag">Reel 60 сек</span>
+          <span class="post-tag gold">Механізм</span>
+          <span class="post-tag">Вірусний потенціал HIGH</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-preview">
+      <div class="post-header"><div class="post-num">5</div>UGC Репост + Коментар Олени (Rhode UGC Style)</div>
+      <div class="post-body">
+        <div class="post-hook">🎣 "День 14. Аліна. Одеса. Ось що змінилось."</div>
+        <strong style="color:var(--deep);">Caption:</strong><br>
+        Аліна почала протокол 2 тижні тому.<br>
+        Діагноз її шкіри: порушений бар'єр + постакне.<br><br>
+        День 1: "Боялась, що почервоніє."<br>
+        День 7: "Перший раз без відчуття стягнутості."<br>
+        День 14: "Не ідеально. Але шкіра перестала сигналити."<br><br>
+        Ми не обіцяємо ідеал. Ми відновлюємо функцію.<br><br>
+        📩 Твоя схожа ситуація? Пиши SET → персональний протокол.
+        <div class="post-meta">
+          <span class="post-tag">Carousel до/після</span>
+          <span class="post-tag gold">UGC</span>
+          <span class="post-tag">#FormulaSea14days</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc">
+      <div class="acc-h" onclick="toggleAcc(this)">📌 Ще 5 постів — розгорнути <span class="chevron">▼</span></div>
+      <div class="acc-b">
+
+        <div class="post-preview" style="margin-top:14px;">
+          <div class="post-header"><div class="post-num">6</div>Stories Chain — Квиз "Твій тип порушення"</div>
+          <div class="post-body">
+            <div class="post-hook">Слайд 1: "3 запитання — і ти дізнаєшся свій тип. Починаємо?"</div>
+            Слайд 2: Опитування — "Як реагує шкіра після вмивання?"<br>
+            Слайд 3: Опитування — "Скільки часу існує ця проблема?"<br>
+            Слайд 4: Опитування — "Ти пробувала засоби 'для чутливої' — результат?"<br>
+            Слайд 5: "Відповідь → напиши результати в DM — підберу протокол"<br>
+            <div class="post-meta"><span class="post-tag">Stories 5 слайдів</span><span class="post-tag gold">Квиз</span></div>
+          </div>
+        </div>
+
+        <div class="post-preview">
+          <div class="post-header"><div class="post-num">7</div>Reel — "Чому я зробила тільки 3 продукти" (Rhode Less is More)</div>
+          <div class="post-body">
+            <div class="post-hook">🎣 "Мені пропонували зробити 15 SKU. Я зробила 3. Ось чому."</div>
+            Rhode запустився з 3 продуктів і став $1B брендом. Але причина моя — інша: чутлива шкіра і так отримує забагато. Кожен новий продукт = новий ризик. 3 = достатньо для системи.
+          </div>
+        </div>
+
+        <div class="post-preview">
+          <div class="post-header"><div class="post-num">8</div>Пост — "Мій найважчий кейс" (Vulnerability = Trust)</div>
+          <div class="post-body">
+            <div class="post-hook">🎣 "Це кейс, який я довго не хотіла публікувати."</div>
+            Клієнтка з дуже чутливою шкірою після ліків. Перший протокол не допоміг так, як очікувалось. Ми адаптували. Другий місяць — результат. Чесна розповідь без прикрас. Rhode теж реагував на критику публічно — і це підвищило довіру.
+          </div>
+        </div>
+
+        <div class="post-preview">
+          <div class="post-header"><div class="post-num">9</div>Reel — "Сезонна формула зима 2026" (Product Tease)</div>
+          <div class="post-body">
+            <div class="post-hook">🎣 "Тестую зимову версію крему — зміни в рецептурі"</div>
+            Зима = нижча вологість = більша TEWL. Показую, що змінюю у формулі (більше церамідів, інший загусник). Тизер нової партії за 3 тижні. Rhode-стиль: анонс через процес.
+          </div>
+        </div>
+
+        <div class="post-preview">
+          <div class="post-header"><div class="post-num">10</div>Carousel — "Протокол vs Окремий крем: математика"</div>
+          <div class="post-body">
+            <div class="post-hook">🎣 "1 000 ₴ за систему або 3 безрезультатних покупки по 400?"</div>
+            Слайд 1: Математика витрат за 3 місяці пошуку. Слайд 2: Чому одиничний продукт не вирішує проблему бар'єру. Слайд 3: S.E.T. = система, а не крем. Rhode навчив: ціна = не бар'єр для продажу, якщо ціннісна пропозиція зрозуміла.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ DROPS ═══ -->
+  <div class="section" id="drops">
+    <div class="sec-title">Дроп-Стратегія (Rhode Framework)</div>
+    <div class="sec-sub">Як перетворити кожну партію на подію</div>
+
+    <blockquote>"Rhode drops products in small batches — leaving a 440,000-person waitlist. Because scarcity creates a frenzy." — Rhode Case Study 2025</blockquote>
+
+    <div class="card card-gold">
+      <h3>🎯 Архітектура Дропу Formula SEA (адаптація Rhode)</h3>
+      <table class="data-table">
+        <thead><tr><th>Фаза</th><th>Тривалість</th><th>Дії</th><th>Контент</th></tr></thead>
+        <tbody>
+          <tr><td><strong>☁️ Тизер</strong></td><td>7 днів до</td><td>Натяки на нову партію без деталей</td><td>Закулісся лабораторії, pH-метр, зважування</td></tr>
+          <tr><td><strong>📢 Анонс</strong></td><td>3 дні до</td><td>"Партія №X — 25 наборів. Старт у п'ятницю 18:00"</td><td>Reel + Stories + тригер ПАРТІЯ в боті</td></tr>
+          <tr><td><strong>⏰ Countdown</strong></td><td>24 год до</td><td>Stories таймер, розсилка по підписниках бота</td><td>"Залишилось 24 год. 25 наборів."</td></tr>
+          <tr><td><strong>🚀 Запуск</strong></td><td>День Х 18:00</td><td>Публікація, пряме посилання, активний DM</td><td>Reel "Відкриваємо продаж" + сторіс кожні 2 год</td></tr>
+          <tr><td><strong>📦 Sold Out</strong></td><td>Після розпродажу</td><td>"Набори пішли. Наступна партія через 3 тижні"</td><td>Скріншоти замовлень, подяка, список очікування</td></tr>
+          <tr><td><strong>🕐 Очікування</strong></td><td>2–3 тижні</td><td>Always-on контент, нових підписників у воронку</td><td>Освіта, механізм, закулісся виробництва</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>📆 Графік дропів на 3 місяці</h3>
+      <div class="grid-3">
+        <div class="mini-card">
+          <h4>Місяць 1</h4>
+          <p><strong>Партія №1 (старт)</strong><br>20 наборів S.E.T.<br>Тема: "Введення в протокол"<br>Ціль: перші відгуки + UGC</p>
+        </div>
+        <div class="mini-card gold-top">
+          <h4>Місяць 2</h4>
+          <p><strong>Партія №2</strong><br>30 наборів<br>Тема: "Зимова адаптація формули"<br>Ціль: список очікування</p>
+        </div>
+        <div class="mini-card deep-top">
+          <h4>Місяць 3</h4>
+          <p><strong>Партія №3 + лімітована</strong><br>40 наборів + 5 special<br>Тема: "90 днів зміцнення"<br>Ціль: амбасадори</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-blue">
+      <h3>🤖 Бот-сценарій для дропу (тригер ПАРТІЯ)</h3>
+      <div class="bot-msg user">ПАРТІЯ</div>
+      <div class="bot-msg">🌿 Привіт! Ти в списку першої черги на наступну партію S.E.T. Протоколу.<br><br>📦 Партія №7 — 25 наборів<br>📅 Старт: п'ятниця 17 грудня о 18:00<br>💰 Ціна: 1 000 ₴<br><br>За 24 год до старту я надішлю тобі пряме посилання.<br><br>Поки чекаємо — хочеш дізнатись, який у тебе тип порушення бар'єру?<br>[✅ Так, пройти тест] [⏰ Нагадай тільки про старт]</div>
+      <div class="bot-msg user">Так, пройти тест</div>
+      <div class="bot-msg">Чудово! → квиз 5 питань → персональна рекомендація протоколу → в день дропу: "Ти підходиш для S.E.T. Варіант А. Ось чому..." ✅</div>
+      <div class="insight">Бот перетворює список очікування на попередній прогрів. До моменту відкриття продажу — людина вже знає свій тип і впевнена в покупці.</div>
+    </div>
+  </div>
+
+  <!-- ═══ UGC ═══ -->
+  <div class="section" id="ugc">
+    <div class="sec-title">UGC-Система "14-Денний Щоденник"</div>
+    <div class="sec-sub">Rhode UGC model → Formula SEA структурований протокол-контент</div>
+
+    <div class="trust-box">Rhode: #Rhode = 356,000 постів від фанів — без жодного бюджету на UGC. Секрет: бренд створив культуру участі. Formula SEA: структурований щоденник = кращий UGC ніж просто "поділись відгуком".</div>
+
+    <div class="card card-gold">
+      <h3>📸 Система "Щоденник 14 Днів" — покрокова механіка</h3>
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>При кожному замовленні — картка-завдання</strong>
+            Вкладається в посилку: "Привіт! Тебе обрано для щоденника. День 1, 7 і 14 — зроби фото шкіри в один і той же час, без макіяжу, природне освітлення. Поділись з #FormulaSea14days — я особисто відповім."
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>ManyChat послідовність після замовлення</strong>
+            День 1: "Привіт! Як перше враження від протоколу?" → нагадування на день 7 → нагадування на день 14 → запит на відгук.
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>Репост + Коментар Олени = золото</strong>
+            Кожен UGC, який Олена репостить, отримує розгорнутий коментар технолога: "Ось що відбулось з бар'єром Олі на 7-й день — і чому". Rhode це теж робить, але без наукового пояснення.
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>Амбасадори — найактивніші учасники</strong>
+            Хто публікує щоденник + набирає 50+ лайків → отримує статус "Амбасадор Formula SEA" + знижку 15% на наступне замовлення + ексклюзивний доступ до нових партій першою.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🤝 Мікро-інфлюенсери: Rhode 62% мікро → Formula SEA адаптація</h3>
+      <table class="data-table">
+        <thead><tr><th>Тип</th><th>Аудиторія</th><th>Пропозиція</th><th>Очікуваний контент</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Нанo (500–2K)</strong></td><td>Локальна, Одеса/UA</td><td>Повний набір S.E.T. бартер</td><td>Щоденник 14 днів Reels/Stories</td></tr>
+          <tr><td><strong>Мікро (2K–10K)</strong></td><td>Тематика шкіра/ЗСЖ</td><td>S.E.T. + 300 ₴ бонус</td><td>Відгук + розповідь + CTA BARRIER</td></tr>
+          <tr><td><strong>Мікро (10K–50K)</strong></td><td>Б'юті UA</td><td>S.E.T. + 500–1000 ₴</td><td>Reel огляд + Stories серія</td></tr>
+          <tr><td><strong>Дерматолог/косметолог</strong></td><td>Буд-яка</td><td>Безкоштовно + партнерство</td><td>Професійна думка про формулу</td></tr>
+        </tbody>
+      </table>
+      <div class="insight">Rhode залучив дерматолога Golloria George після критики і це стало viral. Formula SEA: шукаємо UA-дерматологів з активним Insta → пропонуємо розбір формули публічно. Конфлікт або партнерство = контент.</div>
+    </div>
+  </div>
+
+  <!-- ═══ CALENDAR ═══ -->
+  <div class="section" id="calendar">
+    <div class="sec-title">Контент-план: 5 тижнів</div>
+    <div class="sec-sub">Rhode ритм + Formula SEA глибина — натисни на тиждень для деталей</div>
+
+    <div class="cal-week">
+      <div class="cal-head w1" onclick="toggleCal(this)">
+        <div class="cal-week-num">01</div>
+        <div>
+          <div class="cal-head-title">Введення: Олена і бренд</div>
+          <div style="font-size:12px; opacity:0.7;">Дні 1–7 · Побудова особистості та довіри</div>
+        </div>
+        <div class="cal-head-sub">▼</div>
+      </div>
+      <div class="cal-body">
+        <div class="cal-day"><div class="day-num">1</div><div class="day-content"><div class="day-format">Reel</div><div class="day-topic">POV: Ранок технолога — мій протокол + закулісся лабораторії</div><div class="day-cta">→ Збережи · Запитай у коментарях</div></div></div>
+        <div class="cal-day"><div class="day-num">2</div><div class="day-content"><div class="day-format">Stories 5 слайдів</div><div class="day-topic">Опитування: "Яка твоя головна проблема зі шкірою?"</div><div class="day-cta">→ Відповідь в DM = старт квизу</div></div></div>
+        <div class="cal-day"><div class="day-num">3</div><div class="day-content"><div class="day-format">Carousel</div><div class="day-topic">"Хто я: не просто бренд — технолог, що мислить як лікар"</div><div class="day-cta">→ Поділись</div></div></div>
+        <div class="cal-day"><div class="day-num">4</div><div class="day-content"><div class="day-format">Reel</div><div class="day-topic">"Що таке TEWL — одне поняття, що пояснює все"</div><div class="day-cta">→ Збережи · BARRIER в DM</div></div></div>
+        <div class="cal-day"><div class="day-num">5</div><div class="day-content"><div class="day-format">Пост</div><div class="day-topic">Відгук клієнтки день 14 — з поясненням механізму від Олени</div><div class="day-cta">→ Пиши SET</div></div></div>
+        <div class="cal-day"><div class="day-num">6</div><div class="day-content"><div class="day-format">Stories</div><div class="day-topic">Закулісся: зважую кераміди для нової партії</div><div class="day-cta">→ Тизер дропу</div></div></div>
+        <div class="cal-day"><div class="day-num">7</div><div class="day-content"><div class="day-format">Reel</div><div class="day-topic">"3 звички, що руйнують бар'єр щодня" — Rhode-стиль короткий</div><div class="day-cta">→ Збережи + репост</div></div></div>
+      </div>
+    </div>
+
+    <div class="cal-week">
+      <div class="cal-head w2" onclick="toggleCal(this)">
+        <div class="cal-week-num">02</div>
+        <div>
+          <div class="cal-head-title">Глибина: Наука і Продукт</div>
+          <div style="font-size:12px; opacity:0.7;">Дні 8–14 · Механізм + анонс партії</div>
+        </div>
+        <div class="cal-head-sub">▼</div>
+      </div>
+      <div class="cal-body">
+        <div class="cal-day"><div class="day-num">8</div><div class="day-content"><div class="day-format">Reel</div><div class="day-topic">Розбір складу популярного крему "для чутливої шкіри" — без осуду</div><div class="day-cta">→ "Надішли свій крем — розберу"</div></div></div>
+        <div class="cal-day"><div class="day-num">9</div><div class="day-content"><div class="day-format">Carousel</div><div class="day-topic">"Що всередині S.E.T. — кожен інгредієнт має роль"</div><div class="day-cta">→ Питання в коментарях</div></div></div>
+        <div class="cal-day"><div class="day-num">10</div><div class="day-content"><div class="day-format">Stories</div><div class="day-topic">АНОНС ПАРТІЇ: "Нова партія — 25 наборів. Старт п'ятниця." Тригер ПАРТІЯ</div><div class="day-cta">→ Пиши ПАРТІЯ в DM</div></div></div>
+        <div class="cal-day"><div class="day-num">11</div><div class="day-content"><div class="day-format">Reel</div><div class="day-topic">"Ламелярний крем — що це насправді" + покази текстури</div><div class="day-cta">→ Питання</div></div></div>
+        <div class="cal-day"><div class="day-num">12</div><div class="day-content"><div class="day-format">UGC Repост</div><div class="day-topic">Клієнтський щоденник день 7 + коментар Олени про механізм</div><div class="day-cta">→ #FormulaSea14days</div></div></div>
+        <div class="cal-day"><div class="day-num">13</div><div class="day-content"><div class="day-format">Stories Countdown</div><div class="day-topic">"24 год до відкриття партії." Таймер, нагадування</div><div class="day-cta">→ Пряме посилання</div></div></div>
+        <div class="cal-day"><div class="day-num">14</div><div class="day-content"><div class="day-format">🚀 ДЕНЬ ДРОПУ</div><div class="day-topic">Reel "Відкриваємо!" + посилання + активний DM + оновлення кожні 2 год</div><div class="day-cta">→ Продажі</div></div></div>
+      </div>
+    </div>
+
+    <div class="cal-week">
+      <div class="cal-head w3" onclick="toggleCal(this)">
+        <div class="cal-week-num">03</div>
+        <div>
+          <div class="cal-head-title">UGC хвиля + Sold Out</div>
+          <div style="font-size:12px; opacity:0.7;">Дні 15–21 · Результати продажів + початок нового циклу</div>
+        </div>
+        <div class="cal-head-sub">▼</div>
+      </div>
+      <div class="cal-body">
+        <div class="cal-day"><div class="day-num">15</div><div class="day-content"><div class="day-format">Stories</div><div class="day-topic">"Набори пішли. Дякую кожній. Наступна партія через 3 тижні" + список очікування</div></div></div>
+        <div class="cal-day"><div class="day-num">16</div><div class="day-content"><div class="day-format">Reel</div><div class="day-topic">"Поки виробляємо нову партію — розповім про pH протокол"</div><div class="day-cta">→ Always-on освіта</div></div></div>
+        <div class="cal-day"><div class="day-num">17</div><div class="day-content"><div class="day-format">UGC</div><div class="day-topic">Перші відгуки від покупців нової партії</div></div></div>
+        <div class="cal-day"><div class="day-num">18</div><div class="day-content"><div class="day-format">Carousel</div><div class="day-topic">"Постакне і бар'єр — окрема програма відновлення"</div><div class="day-cta">→ Збережи</div></div></div>
+        <div class="cal-day"><div class="day-num">19</div><div class="day-content"><div class="day-format">Stories Q&A</div><div class="day-topic">Олена відповідає на питання підписників про склад і протокол</div></div></div>
+        <div class="cal-day"><div class="day-num">20</div><div class="day-content"><div class="day-format">Reel</div><div class="day-topic">"Мій найважчий кейс" — вразливість = довіра (Edelman)</div></div></div>
+        <div class="cal-day"><div class="day-num">21</div><div class="day-content"><div class="day-format">Carousel</div><div class="day-topic">"Протокол vs окремий крем — математика і логіка"</div><div class="day-cta">→ SET в DM</div></div></div>
+      </div>
+    </div>
+
+    <div class="cal-week">
+      <div class="cal-head w4" onclick="toggleCal(this)">
+        <div class="cal-week-num">04</div>
+        <div>
+          <div class="cal-head-title">Мікро-інфлюенсери + нова партія тизер</div>
+          <div style="font-size:12px; opacity:0.7;">Дні 22–28 · Залучення зовнішніх голосів</div>
+        </div>
+        <div class="cal-head-sub">▼</div>
+      </div>
+      <div class="cal-body">
+        <div class="cal-day"><div class="day-num">22</div><div class="day-content"><div class="day-format">Repост Мікро</div><div class="day-topic">Перший мікро-інфлюенсер публікує свій щоденник. Репост + коментар Олени</div></div></div>
+        <div class="cal-day"><div class="day-num">23</div><div class="day-content"><div class="day-format">Reel</div><div class="day-topic">"Я в лабораторії: тестую зимову адаптацію формули" — тизер нової партії</div></div></div>
+        <div class="cal-day"><div class="day-num">24</div><div class="day-content"><div class="day-format">Carousel</div><div class="day-topic">"Як читати склад крему за 5 хвилин" — лід-магніт</div><div class="day-cta">→ СКЛАД в DM</div></div></div>
+        <div class="cal-day"><div class="day-num">25</div><div class="day-content"><div class="day-format">Stories</div><div class="day-topic">Підбиття 28 днів: цифри, відгуки, що змінилось</div></div></div>
+        <div class="cal-day"><div class="day-num">26</div><div class="day-content"><div class="day-format">Reel</div><div class="day-topic">"28 днів відновлення — що відбувається зі шкірою на другому рівні"</div></div></div>
+        <div class="cal-day"><div class="day-num">27</div><div class="day-content"><div class="day-format">UGC</div><div class="day-topic">Ще 2–3 щоденники клієнтів. Серія Stories</div></div></div>
+        <div class="cal-day"><div class="day-num">28</div><div class="day-content"><div class="day-format">Анонс</div><div class="day-topic">"Нова партія через 7 днів. Список очікування відкритий." ПАРТІЯ в боті</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCALE ═══ -->
+  <div class="section" id="scale">
+    <div class="sec-title">Масштабування: Rhode шлях → Formula SEA</div>
+    <div class="sec-sub">3 місяці → 6 місяців → 1 рік — кроки зростання</div>
+
+    <div class="kpi-row">
+      <div class="kpi-chip"><div class="val">970</div><div class="lbl">Зараз</div></div>
+      <div class="kpi-chip"><div class="val">3K+</div><div class="lbl">Місяць 3</div></div>
+      <div class="kpi-chip"><div class="val">10K</div><div class="lbl">Місяць 6</div></div>
+      <div class="kpi-chip"><div class="val">30K+</div><div class="lbl">Рік 1</div></div>
+    </div>
+
+    <div class="card">
+      <h3>📈 Три фази масштабування</h3>
+      <table class="data-table">
+        <thead><tr><th>Фаза</th><th>Термін</th><th>Головне завдання</th><th>KPI</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1. Foundation</strong><br><em>Rhode старт</em></td><td>Міс 1–3</td><td>Профіль → Контент → Бот → Перші дропи → Перші UGC</td><td>1K–3K підп · 20–30 продажів/міс</td></tr>
+          <tr><td><strong>2. Community</strong><br><em>Rhode мікро-мережа</em></td><td>Міс 4–6</td><td>5–10 мікро-інфлюенсерів · Амбасадори · Ритм дропів</td><td>5K–10K підп · 50–80 продажів/міс</td></tr>
+          <tr><td><strong>3. Scale</strong><br><em>Rhode always-on</em></td><td>Міс 7–12</td><td>Партнерства UA-дерматологи · Новий продукт · Майстер-класи Одеса</td><td>20K–30K підп · 150+ продажів/міс</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card card-gold">
+      <h3>🔭 Rhode → Formula SEA: великі кроки масштабу</h3>
+      <div class="grid-2">
+        <div class="mini-card">
+          <h4>Rhode зробив: Sephora</h4>
+          <p>Офлайн після онлайн-культу. Formula SEA аналог: <strong>Майстер-клас в Одесі</strong> після 500+ клієнтів → медіа-подія → UGC потік.</p>
+        </div>
+        <div class="mini-card gold-top">
+          <h4>Rhode зробив: Phone Case</h4>
+          <p>Продукт-об'єкт бажання. Formula SEA аналог: <strong>Брендована пакувальна коробка</strong> що хочеться знімати і публікувати + картка щоденника.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Rhode зробив: Collab (Krispy Kreme)</h4>
+          <p>UA аналог: <strong>Колаборація з UA-брендом</strong> (чай/їжа/ЗСЖ) для перехресної аудиторії. Не конкурент — суміжна ніша.</p>
+        </div>
+        <div class="mini-card gold-top">
+          <h4>Rhode зробив: Creator Ecosystem</h4>
+          <p>50% creator retention. Formula SEA: <strong>Програма "Технолог рекомендує"</strong> — постійні 10 амбасадорів з правами і привілеями.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-blue">
+      <h3>🎯 Ключові дії ЗАРАЗ (перший тиждень)</h3>
+      <div class="steps">
+        <div class="step-item"><div class="step-num">1</div><div class="step-body"><strong>Зняти 3 Reels-заготовки у стилі founder-led</strong> Ранкова рутина, лабораторія, пояснення TEWL. Без студії — автентичність Rhode.</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-body"><strong>Налаштувати ManyChat з 4 тригерами + дроп-флоу</strong> BARRIER / SET / СКЛАД / ПАРТІЯ. Список очікування як перший "дроп".</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-body"><strong>Визначити дату першого офіційного дропу</strong> Оголосити через Stories. Тизер → 7 днів → анонс → старт.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-body"><strong>Написати 5 мікро-інфлюенсерам UA</strong> За шаблоном — бартер за щоденник 14 днів без зобов'язань публікуватись.</div></div>
+        <div class="step-item"><div class="step-num">5</div><div class="step-body"><strong>Оновити профіль + Bio + Pin posts</strong> SEO-оптимізація + перший закріплений відео Олени-засновника.</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Formula SEA ProLab × Rhode Framework × Edelman Trust Barometer 2026<br>
+  Олена — технолог, формулятор · "Відновлення через механізм, а не маркетинг"
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({ top: document.querySelector('.tabs-bar').offsetTop - 10, behavior: 'smooth' });
+}
+function toggleAcc(h) {
+  const b = h.nextElementSibling;
+  const open = h.classList.contains('open');
+  document.querySelectorAll('.acc-h').forEach(x => x.classList.remove('open'));
+  document.querySelectorAll('.acc-b').forEach(x => x.classList.remove('open'));
+  if (!open) { h.classList.add('open'); b.classList.add('open'); }
+}
+function toggleCal(h) {
+  const b = h.nextElementSibling;
+  b.classList.toggle('open');
+  const arr = h.querySelector('.cal-head-sub');
+  if(arr) arr.textContent = b.classList.contains('open') ? '▲' : '▼';
+}
+</script>
+</body>
+</html>
